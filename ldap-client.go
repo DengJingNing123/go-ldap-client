@@ -27,6 +27,13 @@ type LDAPClient struct {
 	ClientCertificates []tls.Certificate // Adding client certificates
 }
 
+type LdapClientInterface interface {
+	Connect() error
+	Close()
+	Authenticate(username, password string) (bool, map[string]string, error)
+	GetGroupsOfUser(username string) ([]string, error)
+}
+
 // Connect connects to the ldap backend.
 func (lc *LDAPClient) Connect() error {
 	if lc.Conn == nil {
