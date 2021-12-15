@@ -116,6 +116,7 @@ func (lc *LDAPClient) Authenticate(username, password string) (bool, map[string]
 	for _, attr := range lc.Attributes {
 		user[attr] = sr.Entries[0].GetAttributeValue(attr)
 	}
+	user["dn"] = userDN
 
 	// Bind as the user to verify their password
 	err = lc.Conn.Bind(userDN, password)
